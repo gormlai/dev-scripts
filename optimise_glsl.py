@@ -6,14 +6,50 @@
 # SPIRV-Cross
 
 import sys
+import os
+import ntpath
+import time
 
-print 'Number of arguments:', len(sys.argv), 'arguments.'
-print 'Argument List:', str(sys.argv)
+numArguments = len(sys.argv);
+if numArguments!=3:
+    print "usage: optimise_glsl.py <source_dir> <destination_dir>"
+    exit(0)
 
-glslangValidator.exe -V -o ./water_fragment.spv ../shaders/water_fragment.frag
+srcDir = sys.argv[1]
+dstDir = sys.argv[2]
 
-~/glc02/development/opensource/SPIRV-Tools/build/tools/RelWithDebInfo/spirv-opt.exe -O ./terrain_vertex.spv -o ./terr
-ain_vertex_opt.spv
 
-~/glc02/development/opensource/SPIRV-Cross/msvc/x64/Release/SPIRV-Cross.exe terrain_vertex_opt.spv --version 430 --ou
-tput ./terrain_vertex.vert
+if os.path.isdir(srcDir) == False:
+    print " given as source directory, is not a directory."
+    exit(0)
+
+if os.path.isdir(dstDir) == False:
+    print dstDir + " given as destination directory, is not a directory."
+    exit(0)
+
+filelist = os.listdir(srcDir)
+for file in filelist:
+    name,ext =  os.path.splitext(file)
+    if ext==".frag" or ext==".vert" or ext==".comp":
+        command = "glslangValidator.exe -V -o " + dstDir +"/" + name +".spv " + srcDir + "/" + file
+        os.system(command)
+
+for file in filelist:
+    name,ext =  os.path.splitext(file)
+    dstFile = dstDir + "/" + name + "_opt.spv"
+    srcFile = dstDir + "/" + name + ".spv"
+    if os.path.isfile(srcFile):
+        optCommand = "spirv-opt.exe -O " + srcFile + " -o " + dstFile
+        os.system(optCommand)
+        time.sleep(0.1)
+        os.remove(srcFile)
+
+for file in filelist:
+    name,ext =  os.path.splitext(file)
+    dstFile = dstDir + "/" + file
+    srcFile = dstDir + "/" + name + "_opt.spv"
+    if os.path.isfile(srcFile):
+        command = "SPIRV-Cross.exe " + srcFile + " --version 430 --output " + dstFile
+        os.system(command)
+        time.sleep(0.1)
+        os.remove(srcFile)
