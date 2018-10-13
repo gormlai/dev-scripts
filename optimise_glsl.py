@@ -49,7 +49,7 @@ for file in filelist:
     dstFile = dstDir + "/" + file
     srcFile = dstDir + "/" + name + "_opt.spv"
     if os.path.isfile(srcFile):
-        command = "SPIRV-Cross.exe " + srcFile + " --version 430 --output " + dstFile
+        command = "SPIRV-Cross.exe " + srcFile + " --version 420 --output " + dstFile
         os.system(command)
         time.sleep(0.1)
         os.remove(srcFile)
