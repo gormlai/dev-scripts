@@ -9,6 +9,7 @@ import sys
 import os
 import ntpath
 import time
+import platform
 
 numArguments = len(sys.argv);
 if numArguments!=3:
@@ -29,6 +30,11 @@ if os.path.isdir(dstDir) == False:
 
 filelist = os.listdir(srcDir)
 
+if platform.system() == "Darwin":
+    executable = "glslangValidator"
+else:
+    executable = "glslangValidator.exe"
+
 for file in filelist:
     name,ext =  os.path.splitext(file)
     srcFile = srcDir + "/" + file
@@ -37,6 +43,6 @@ for file in filelist:
         if os.path.isfile(dstFile):
             os.remove(dstFile)
         time.sleep(0.1)
-        command = "glslangValidator.exe " + srcFile + " -V110 --target-env vulkan1.1 -o " + dstFile
+        command = executable + " " + srcFile + " -V110 --target-env vulkan1.1 -o " + dstFile
         print command
         os.system(command)
