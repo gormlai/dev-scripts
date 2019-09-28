@@ -13,7 +13,7 @@ import platform
 
 numArguments = len(sys.argv);
 if numArguments!=3:
-    print "usage: glsl2spirv.py <source_dir> <destination_dir>"
+    print ("usage: glsl2spirv.py <source_dir> <destination_dir>")
     exit(0)
 
 srcDir = sys.argv[1]
@@ -21,11 +21,11 @@ dstDir = sys.argv[2]
 
 
 if os.path.isdir(srcDir) == False:
-    print " given as source directory, is not a directory."
+    print (" given as source directory, is not a directory.")
     exit(0)
 
 if os.path.isdir(dstDir) == False:
-    print dstDir + " given as destination directory, is not a directory."
+    print (dstDir + " given as destination directory, is not a directory.")
     exit(0)
 
 filelist = os.listdir(srcDir)
@@ -44,5 +44,5 @@ for file in filelist:
             os.remove(dstFile)
         time.sleep(0.1)
         command = executable + " " + srcFile + " -V110 --target-env vulkan1.1 -o " + dstFile
-        print command
+        print (command)
         os.system(command)
