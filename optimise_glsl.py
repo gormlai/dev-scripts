@@ -12,7 +12,7 @@ import time
 
 numArguments = len(sys.argv);
 if numArguments!=3:
-    print "usage: optimise_glsl.py <source_dir> <destination_dir>"
+    print ("usage: optimise_glsl.py <source_dir> <destination_dir>")
     exit(0)
 
 srcDir = sys.argv[1]
@@ -20,11 +20,11 @@ dstDir = sys.argv[2]
 
 
 if os.path.isdir(srcDir) == False:
-    print " given as source directory, is not a directory."
+    print (" given as source directory, is not a directory.")
     exit(0)
 
 if os.path.isdir(dstDir) == False:
-    print dstDir + " given as destination directory, is not a directory."
+    print (dstDir + " given as destination directory, is not a directory.")
     exit(0)
 
 filelist = os.listdir(srcDir)
