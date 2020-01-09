@@ -38,7 +38,7 @@ else:
 for file in filelist:
     name,ext =  os.path.splitext(file)
     srcFile = srcDir + "/" + file
-    dstFile = dstDir + "/" + ext[1:] + ".spv"
+    dstFile = dstDir + "/" + name + "_" + ext[1:] + ".spv"
     if os.path.isfile(srcFile):
         if os.path.isfile(dstFile):
             os.remove(dstFile)
