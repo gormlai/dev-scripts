@@ -31,7 +31,7 @@ filelist = os.listdir(srcDir)
 for file in filelist:
     name,ext =  os.path.splitext(file)
     if ext==".frag" or ext==".vert" or ext==".comp":
-        command = "glslangValidator.exe -V -o " + dstDir +"/" + name +".spv " + srcDir + "/" + file
+        command = "glslang -R -V -Os -g0 -o " + dstDir +"/" + name +".spv " + srcDir + "/" + file
         os.system(command)
 
 for file in filelist:
@@ -39,7 +39,7 @@ for file in filelist:
     dstFile = dstDir + "/" + name + "_opt.spv"
     srcFile = dstDir + "/" + name + ".spv"
     if os.path.isfile(srcFile):
-        optCommand = "spirv-opt.exe -O " + srcFile + " -o " + dstFile
+        optCommand = "spirv-opt.exe -O  " + srcFile + " -o " + dstFile
         os.system(optCommand)
         time.sleep(0.1)
         os.remove(srcFile)
@@ -49,7 +49,7 @@ for file in filelist:
     dstFile = dstDir + "/" + file
     srcFile = dstDir + "/" + name + "_opt.spv"
     if os.path.isfile(srcFile):
-        command = "SPIRV-Cross.exe " + srcFile + " --version 420 --output " + dstFile
+        command = "SPIRV-Cross.exe " + srcFile + " --version 440 --output " + dstFile
         os.system(command)
         time.sleep(0.1)
         os.remove(srcFile)

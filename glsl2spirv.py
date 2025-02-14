@@ -43,6 +43,6 @@ for file in filelist:
         if os.path.isfile(dstFile):
             os.remove(dstFile)
         time.sleep(0.1)
-        command = executable + " " + srcFile + " -V110 --target-env vulkan1.1 -o " + dstFile
+        command = executable + " " + srcFile + " -V --target-env vulkan1.1 -o " + dstFile
         print (command)
         os.system(command)
